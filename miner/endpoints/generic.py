@@ -58,4 +58,11 @@ def factory_router() -> APIRouter:
         methods=["POST"],
         dependencies=[Depends(blacklist_low_stake), Depends(verify_request)],
     )
+    router.add_api_route(
+        "/Capacity",
+        capacity,
+        tags=["Subnet"],
+        methods=["POST"],
+        dependencies=[Depends(blacklist_low_stake), Depends(verify_request)],
+    )
     return router
