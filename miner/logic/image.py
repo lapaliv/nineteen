@@ -15,7 +15,17 @@ async def get_image_from_server(
     timeout: float = 20.0,
 ) -> dict | None:
     assert worker_config.IMAGE_WORKER_URL is not None, "IMAGE_WORKER_URL is not set in env vars!"
-    endpoint = worker_config.IMAGE_WORKER_URL.rstrip("/") + "/" + post_endpoint
+
+    # Разделение строк и выбор URL по текущему индексу
+    urls = worker_config.IMAGE_WORKER_URL.split(",")
+    if not hasattr(worker_config, "_current_url_index"):
+        worker_config._current_url_index = 0  # Инициализация индекса
+
+    current_index = worker_config._current_url_index
+    endpoint = urls[current_index].strip().rstrip("/") + "/" + post_endpoint
+
+    # Обновляем индекс для следующего вызова
+    worker_config._current_url_index = (current_index + 1) % len(urls)
 
     try:
         logger.debug(f"Sending request to {endpoint}")
