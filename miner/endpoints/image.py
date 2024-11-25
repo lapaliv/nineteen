@@ -42,7 +42,7 @@ async def _process_image_request(
         body=decrypted_payload,
         post_endpoint=post_endpoint,
         worker_config=worker_config,
-        timeout=30,
+        timeout=240,
     )
     if image_response is None or (image_response.get("image_b64") is None and image_response.get("is_nsfw") is None):
         logger.debug(f"Image response: {image_response}")
