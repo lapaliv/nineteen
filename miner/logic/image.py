@@ -12,7 +12,7 @@ async def get_image_from_server(
     body: BaseModel,
     post_endpoint: str,
     worker_config: WorkerConfig,
-    timeout: float = 240.0,
+    timeout: float = 20.0,
 ) -> dict | None:
     assert worker_config.IMAGE_WORKER_URL is not None, "IMAGE_WORKER_URL is not set in env vars!"
     endpoint = worker_config.IMAGE_WORKER_URL.rstrip("/") + "/" + post_endpoint
