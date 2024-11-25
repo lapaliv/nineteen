@@ -25,7 +25,9 @@ async def _process_image_request(
 ) -> payload_models.ImageResponse:
     logger.info(f"Processing image request: {decrypted_payload}")
 
-    assert hasattr(decrypted_payload, 'model'), "The image request payload must have a 'model' attribute"
+#     assert hasattr(decrypted_payload, 'model'), "The image request payload must have a 'model' attribute"
+    if not hasattr(decrypted_payload, 'model') or decrypted_payload.model is None:
+        decrypted_payload.model = 'proteus-image-to-image'
 
     task_config = tcfg.get_enabled_task_config(decrypted_payload.model)
     if task_config is None:
